@@ -1,6 +1,7 @@
 import './App.css';
 import CandidateAcademicInfo from './components/CandidateAcademicInfo/CandidateAcademicInfo';
 import CandidatePersonalInfo from './components/CandidatePersonalInfo/CandidatePersonalInfo';
+import CandidateSkillsInfo from './components/CandidateSkillsInfo/CandidateSkillsInfo';
 import { CandidateWorkInfo } from './components/CandidateWorkInfo/CandidateWorkInfo';
 
 
@@ -10,7 +11,8 @@ function App() {
     <div className="App">
      {/* <CandidatePersonalInfo></CandidatePersonalInfo> */}
     {/* <CandidateAcademicInfo /> */}
-    <CandidateWorkInfo />
+    {/* <CandidateWorkInfo /> */}
+    <CandidateSkillsInfo />
     </div>
   );
 }
