@@ -169,7 +169,7 @@ export default function CandidateskillInfo() {
       })
       .catch((err) => {
         // messageApi.error("Error deleting details!");
-        console.log(err);
+        console.log(err); 
         setDeleteId(null);
       });
   };
