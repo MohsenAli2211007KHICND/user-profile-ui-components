@@ -10,7 +10,6 @@ export default function CandidateskillInfo() {
   const [skillData, SetskillData] = useState([{ skill: "java", level: "7" }]);
   const [certificate, setCertificate] = useState();
   const [certificateData, setCertificateData] = useState([]);
-  // const [selectedFile,setselectedFile] = useState();
 
   const fileRef = useRef();
 
@@ -22,7 +21,6 @@ export default function CandidateskillInfo() {
   });
   const handleCertificate = useCallback((value) => {
     setCertificate(value);
-    // setselectedFile(value);
   });
 
   const onSubmit = (e) => {
@@ -45,37 +43,11 @@ export default function CandidateskillInfo() {
     const upload = (e) => {
     e.preventDefault();
     if(certificate){
-      // console.log("inside condition")
       setCertificateData([...certificateData, certificate]);
       setCertificate(null);
       fileRef.current.value = null;
 
     }
-
-    // ---xxxxxxxxxxx--------------
-    // if (certificateData.length !== 0) {
-    //   for (let element of certificateData) {
-    //     if (element === certificate) {
-    //       alert(`${certificate.name} Already exist`);
-    //       setCertificate(null);
-    //       return;
-    //       console.log('hello')
-    //     }
-    //     console.log('hello1')
-    //   }
-    //   setCertificateData([...certificateData, certificate]);
-    //   setCertificate(null);
-    //   // setselectedFile('');
-    //   fileRef.current.value = null;
-    //   console.log(fileRef.current.value);
-    // }
-    // else if (certificate) {
-    //   setCertificateData([...certificateData, certificate]);
-    //   fileRef.current.value = null;
-    //   setCertificate(null);
-    // }
-    // console.log(certificate);
-
 
   };
   console.log(certificateData);
