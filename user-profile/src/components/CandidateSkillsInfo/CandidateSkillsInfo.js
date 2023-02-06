@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import Heading from "../Heading/Heading";
 import styles from "../CandidateAcademicInfo/CandidateAcademicInfo.module.css";
 import InputField from "../InputField/InputField";
@@ -10,6 +10,9 @@ export default function CandidateskillInfo() {
   const [skillData, SetskillData] = useState([{ skill: "java", level: "7" }]);
   const [certificate, setCertificate] = useState();
   const [certificateData, setCertificateData] = useState([]);
+  // const [selectedFile,setselectedFile] = useState();
+
+  const fileRef = useRef();
 
   const handleskill = useCallback((value) => {
     setskill(value);
@@ -19,11 +22,12 @@ export default function CandidateskillInfo() {
   });
   const handleCertificate = useCallback((value) => {
     setCertificate(value);
+    // setselectedFile(value);
   });
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (skillData) {
+    if (skillData.length !==0) {
       for (let element of skillData) {
         if (element.skill === skill) {
           alert(`${skill} Already exists`);
@@ -38,22 +42,44 @@ export default function CandidateskillInfo() {
     }
   };
 
-  const upload = (e) => {
+    const upload = (e) => {
     e.preventDefault();
-    if (certificateData) {
-      for (let element of certificateData) {
-        if (element.name === certificate.name) {
-          alert(`${certificate} Already exist`);
-          setCertificate("");
-          return;
-        }
-      }
+    if(certificate){
+      // console.log("inside condition")
       setCertificateData([...certificateData, certificate]);
-      setCertificate("");
+      setCertificate(null);
+      fileRef.current.value = null;
+
     }
+
+    // ---xxxxxxxxxxx--------------
+    // if (certificateData.length !== 0) {
+    //   for (let element of certificateData) {
+    //     if (element === certificate) {
+    //       alert(`${certificate.name} Already exist`);
+    //       setCertificate(null);
+    //       return;
+    //       console.log('hello')
+    //     }
+    //     console.log('hello1')
+    //   }
+    //   setCertificateData([...certificateData, certificate]);
+    //   setCertificate(null);
+    //   // setselectedFile('');
+    //   fileRef.current.value = null;
+    //   console.log(fileRef.current.value);
+    // }
+    // else if (certificate) {
+    //   setCertificateData([...certificateData, certificate]);
+    //   fileRef.current.value = null;
+    //   setCertificate(null);
+    // }
     // console.log(certificate);
-    console.log(certificateData);
+
+
   };
+  console.log(certificateData);
+
   return (
     <div className={styles.mainContainer} style={{ display: "block" }}>
       <form className={styles.formPersonalInfo} onSubmit={onSubmit}>
@@ -104,11 +130,14 @@ export default function CandidateskillInfo() {
           })}
         </table>
         <InputField
-          // value={certificate.name}
+          refling={fileRef}
+          accept = '.pdf, .odf'
+          // value={certificate}
           handler={handleCertificate}
           type="file"
           placeholder=""
           className={styles.halfSize}
+          
         />
         <Button type="submit" text="Upload" className={styles.saveButton} />
       </form>

@@ -10,12 +10,15 @@ function InputField({
   handler,
   disabled,
   pattern,
+  accept,
   min,
+  refling
 }) {
   const handleChange = (e) => {
     let value;
     if (type === "file") {
       value = e.target.files[0];
+      // value = e
     } else {
       value = e.target.validity.valid
         ? e.target.value
@@ -27,7 +30,9 @@ function InputField({
   return (
     <>
       <input
+        ref={refling}
         min={min}
+        accept = {accept}
         pattern={pattern}
         disabled={disabled}
         value={value}
