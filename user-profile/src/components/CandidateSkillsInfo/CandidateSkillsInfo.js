@@ -5,17 +5,23 @@ import InputField from "../InputField/InputField";
 import DropdownField from "../DropdownField/DropdownField";
 import Button from "../Button/Button";
 import { message, Popconfirm } from "antd";
+import style from "./CandidateSkillsInfo.module.css";
 
 export default function CandidateskillInfo() {
   const [skill, setSkill] = useState("");
   const [level, setLevel] = useState("");
   const [skillData, setSkillData] = useState([]);
-  const [certificate, setCertificate] = useState();
+  const [certificate, setCertificate] = useState("");
   const [certificateData, setCertificateData] = useState([]);
-  const [id, setId] = useState(1);
   const [deleteId, setDeleteId] = useState(null);
+
+  // -------------xxxxxxxxxx-----------certificate-xxxxxxxxxxxx-----------
+  const [deleteFileId, setDeleteFileId] = useState();
+  const [id, setId] = useState(1);
   // const [userId, setUserId] = useState(sessionStorage.getItem("user_id"));
   const [userId, setUserId] = useState(1);
+  // const [filename, setFileName] = useState(sessionStorage.getItem("filename"));
+  const [filename, setFileName] = useState("myResume");
 
   const fileRef = useRef();
 
@@ -25,8 +31,14 @@ export default function CandidateskillInfo() {
   const postUrl = `${basicRoute}`
   const deleteUrl = `${basicRoute}/${deleteId}`
 
-  const fileUploadUrl = ''
-  const getAllFilesUrl = ''
+
+  //const fileRoute = 'http://userprofileserviceapplication3-env.eba-pm56e7xe.us-east-1.elasticbeanstalk.com/api/file'
+  const fileRoute = 'http://192.168.0.185:5000/api/file'
+
+  const fileUploadUrl = `${fileRoute}/upload`
+  const getAllFilesUrl = `${fileRoute}/user/${userId}`
+  const downloadFileUrl = `${fileRoute}/download/${''}`
+  const deleteFileUrl = `${fileRoute}/delete?id=${deleteFileId}&bucket_filename${''}`
 
   useEffect(() => {
     const fetchSkills = () => {
@@ -147,37 +159,6 @@ export default function CandidateskillInfo() {
     setLevel("");
   };
 
-  const upload = (e) => {
-    e.preventDefault();
-    if (certificate) {
-      setCertificateData([...certificateData, certificate]);
-      setCertificate(null);
-      fileRef.current.value = null;
-    }
-  };
-  // console.log(certificateData);
-
-  const uploadFile = (cert) => {
-    let formData = new FormData();
-
-    formData.append('file', cert);
-
-    fetch(fileUploadUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      body: formData,
-    })
-      .then(async response => {
-        const data = await response.json()
-        console.log(data)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-
   const onDelete = (id) => {
     setDeleteId(id);
   };
@@ -217,6 +198,131 @@ export default function CandidateskillInfo() {
 
   const dontDeleteField = () => {
     setDeleteId(null)
+  }
+
+  //-----------xxxxxxxxx Cerificate Methods xxxxxxxxxxxxx----------------
+
+  const upload = (e) => {
+    e.preventDefault();
+    if (certificate) {
+      setCertificateData([...certificateData,{id, certificate}]);
+      setCertificate(null);
+      fileRef.current.value = null;
+      setId(id+1);
+      setFileName(certificate.name);     
+       uploadFile(certificate,filename, userId)
+
+    }
+
+  };
+
+  const uploadFile = (cert,filename,userId) => {
+    let formData = new FormData();
+
+    formData.append('file', cert);
+    formData.append('user_id', userId);
+    formData.append('filename', filename);
+
+    // const obj = {
+    //   "file":cert,
+    //   "user_id":userId,
+    //   filename
+    // }
+
+    fetch(fileUploadUrl, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        // "Content-Type": "application/json",
+        "Accept": 'application/json',
+      },
+      body: formData,
+    })
+      .then(async response => {
+        console.log(response);
+        const data = await response.json()
+        console.log(data)
+      })
+      .catch(err => {
+        console.log(err)
+      });
+  }
+
+  const deleteFile =() =>{
+    // const newFileData = certificateData.filter((item) => item.id !== deleteFileId);
+    //       setCertificateData(newFileData);
+
+    fetch(deleteFileUrl, {
+      method: "DELETE",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+    })
+      .then((response) => {
+        const res = response ? response.ok : false;
+        console.log(response);
+        if (res) {
+          // messageApi.success("Details deleted successfully!");
+          const newFileData = certificateData.filter((item) => item.id !== deleteFileId);
+                setCertificateData(newFileData);
+        }
+        // else {
+        //   messageApi.error("Error deleting details!");
+        // }
+
+        setDeleteFileId(null);
+      })
+      .catch((err) => {
+        // messageApi.error("Error deleting details!");
+        console.log(err);
+        setDeleteFileId(null);
+      })
+  }
+
+  const dontDeleteFile = () => {
+    setDeleteFileId(null)
+  }
+
+  const onDeleteFile = (id) => {
+    setDeleteFileId(id)
+  }
+
+  const onDownload = () => {
+    fetch(downloadFileUrl, {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+    })
+      .then((response) => {
+        const res = response ? response.ok : false;
+        console.log(response);
+        if (res) {
+          // messageApi.success("Details deleted successfully!");
+          const newFileData = certificateData.filter((item) => item.id !== deleteFileId);
+                setCertificateData(newFileData);
+        }
+        // else {
+        //   messageApi.error("Error deleting details!");
+        // }
+
+        setDeleteFileId(null);
+      })
+      .catch((err) => {
+        // messageApi.error("Error deleting details!");
+        console.log(err);
+        setDeleteFileId(null);
+      })
   }
 
   return (
@@ -281,7 +387,7 @@ export default function CandidateskillInfo() {
             return (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{element.name}</td>
+                <td>{element.certificate.name}</td>
                 <td>
                   <Popconfirm
                     title="Delete File"
@@ -294,9 +400,15 @@ export default function CandidateskillInfo() {
                     <Button
                       onClick={() => onDeleteFile(element.id)}
                       type="button"
-                      text={<i class="fa fa-trash"></i>}
+                      text={<i className="fa fa-trash"></i>}
                     />
                   </Popconfirm>
+                </td>
+                <td><Button
+                onClick={() => onDownload(element.id)}
+                type="button" 
+                text={ <i className="fa-solid fa-cloud-arrow-down"></i> }
+                />
                 </td>
               </tr>
             );
