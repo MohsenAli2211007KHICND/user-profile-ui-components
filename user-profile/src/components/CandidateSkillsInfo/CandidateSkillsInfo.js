@@ -25,8 +25,12 @@ export default function CandidateskillInfo() {
   const postUrl = `${basicRoute}`
   const deleteUrl = `${basicRoute}/${deleteId}`
 
+  const fileUploadUrl = ''
+  const getAllFilesUrl = ''
+
   useEffect(() => {
-    fetch(getSkillsbyUserId)
+    const fetchSkills = () => {
+      fetch(getSkillsbyUserId)
       .then(async (response) => {
         console.log(response);
         const data = await response.json();
@@ -36,6 +40,22 @@ export default function CandidateskillInfo() {
       .catch((err) => {
         console.log("Hello! I caught this error.");
       });
+    }
+    fetchSkills()
+
+    const fetchCertificates = () => {
+      fetch(getAllFilesUrl)
+      .then(async (response) => {
+        console.log(response);
+        const data = await response.json();
+        console.log(data);
+        // setSkillData(data);
+      })
+      .catch((err) => {
+        console.log("Hello! I caught this error.");
+      });
+    }
+    fetchCertificates()
   }, []);
 
   const handleskill = useCallback((value) => {
@@ -137,6 +157,27 @@ export default function CandidateskillInfo() {
   };
   // console.log(certificateData);
 
+  const uploadFile = (cert) => {
+    let formData = new FormData();
+
+    formData.append('file', cert);
+
+    fetch(fileUploadUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      body: formData,
+    })
+      .then(async response => {
+        const data = await response.json()
+        console.log(data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   const onDelete = (id) => {
     setDeleteId(id);
   };
@@ -160,7 +201,7 @@ export default function CandidateskillInfo() {
           // messageApi.success("Details deleted successfully!");
           const newData = skillData.filter((item) => item.id !== deleteId);
           setSkillData(newData);
-        } 
+        }
         // else {
         //   messageApi.error("Error deleting details!");
         // }
@@ -169,7 +210,7 @@ export default function CandidateskillInfo() {
       })
       .catch((err) => {
         // messageApi.error("Error deleting details!");
-        console.log(err); 
+        console.log(err);
         setDeleteId(null);
       });
   };
@@ -177,38 +218,6 @@ export default function CandidateskillInfo() {
   const dontDeleteField = () => {
     setDeleteId(null)
   }
-  //     fetch(`${deleteUrl}/${deleteId}`, {
-  //         method: 'DELETE',
-  //         mode: 'cors',
-  //         cache: 'no-cache',
-  //         credentials: 'same-origin',
-  //         headers: {
-  //             'Content-Type': 'application/json',
-  //         },
-  //         redirect: 'follow',
-  //         referrerPolicy: 'no-referrer',
-  //     })
-  //         .then(response => {
-  //             const res = response ? response.ok : false;
-  //             console.log(response)
-  //             if (res) {
-  //                 messageApi.success('Details deleted successfully!')
-  //                 const newData = eduData.filter((item) => item.id !== deleteId);
-  //                 setEduData(newData)
-  //             }
-  //             else {
-  //                 messageApi.error('Error deleting details!')
-  //             }
-
-  //             setDeleteId(null);
-
-  //         })
-  //         .catch((err) => {
-  //             messageApi.error('Error deleting details!')
-  //             console.log(err)
-  //             setDeleteId(null);
-  //         })
-  // }
 
   return (
     <div className={styles.mainContainer} style={{ display: "block" }}>
@@ -229,7 +238,7 @@ export default function CandidateskillInfo() {
                     title="Delete details"
                     description="Are you sure to delete this details?"
                     onConfirm={deleteField}
-                    // onCancel={dontDeleteField}
+                    onCancel={dontDeleteField}
                     okText="Yes"
                     cancelText="No"
                   >
@@ -273,6 +282,22 @@ export default function CandidateskillInfo() {
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{element.name}</td>
+                <td>
+                  <Popconfirm
+                    title="Delete File"
+                    description="Are you sure to delete this file?"
+                    onConfirm={deleteFile}
+                    onCancel={dontDeleteFile}
+                    okText="Yes"
+                    cancelText="No"
+                  >
+                    <Button
+                      onClick={() => onDeleteFile(element.id)}
+                      type="button"
+                      text={<i class="fa fa-trash"></i>}
+                    />
+                  </Popconfirm>
+                </td>
               </tr>
             );
           })}
