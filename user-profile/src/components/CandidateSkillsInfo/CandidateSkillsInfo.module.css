@@ -1,32 +1,31 @@
-.contentTable {
-    width: 80%;
-    background: darkgray;
-    border-radius: 10px;
-    outline: none;
-    box-shadow: 0 0 10px rgb(27, 26, 26);
-}
-
-.contentTable th {
-    border-bottom: 2px solid gray;
-    padding: 10px;
-}
-
-.contentTable tr td {
-    text-align: center;
-    border-bottom: 1px solid gray;
-    padding: 7px;
-    font-style: oblique;
-
-}
-
-.contentTable tr:last-child td:last-child{
-    border: none;
-}
 
 .levelField {
     width: 25%;
 }
 .certificateField {
-    width: 68%;
+    /* width: 50%; */
     text-align: left;
+}
+.certificatHeading {
+    margin-top: 5%;
+}
+.deleteBtn {
+    color: rgb(190, 103, 103);
+    border: none;
+    
+}
+.deleteBtn:hover{
+    color: red;
+    cursor: pointer;
+}
+.deleteBtn i, .downloadBtn i {
+    font-size: 1.2rem;
+}
+.downloadBtn {
+    color: rgb(96, 96, 187);
+    border: none;
+}
+.downloadBtn:hover {
+    color: blue;
+    cursor: pointer;
 }
