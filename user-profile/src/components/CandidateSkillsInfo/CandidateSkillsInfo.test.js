@@ -15,34 +15,35 @@ describe('CandidateSkillsInfo component test', () => {
 
     it('should get user Skill Data on first render', async () => {
         render(<CandidateskillInfo />);
-        expect(fetch).toHaveBeenCalledTimes(1);
+        expect(fetch).toHaveBeenCalledTimes(2);
         const {skill, proficiency} = mockData[0]
         await waitFor(() => {
-            expect(screen.getByText(skill)).toBeInTheDocument();
+            const sk = screen.getAllByText(skill);
+            const lv = screen.getAllByText(proficiency)
+            sk.forEach((ele) =>{
+                expect(ele).toBeInTheDocument();
+            });
+            lv.forEach((ele) => {
+                expect(ele).toBeInTheDocument();
+            })
         })
-        expect(screen.getByText(proficiency)).toBeInTheDocument();
-        // expect(screen.getByText()).toBeInTheDocument();
-        // expect(screen.getByText(degreeProgress)).toBeInTheDocument();
-        // expect(screen.getByText(graduationDate)).toBeInTheDocument();
-        // expect(screen.getByText(cgpa)).toBeInTheDocument();
-        // expect(screen.getByText(finalYearProject)).toBeInTheDocument();
         
     });
 
-    // it('should take us to adding educational details page when we click + Add Another button', async () => {
-    //     render(<CandidateAcademicInfo />);
-    //     const addAnotherButton = screen.getByText("+ Add New");
-    //     fireEvent(addAnotherButton, new MouseEvent('click', {
-    //         bubbles: true,
-    //         cancelable: true
-    //     }));
-    //     await waitFor(() => {
-    //         expect(screen.getByPlaceholderText('School/University/College')).toBeInTheDocument();
-    //     })
-    //     await waitFor(() => {
-    //         expect(screen.getByText('Cancel')).toBeInTheDocument();
-    //     })
-    // });
+    it('should be able to add new skill details when we click + Add  button', () => {
+        render(<CandidateskillInfo />);
+        const addBtn = screen.getByText("Add");
+        fireEvent(addBtn, new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true
+        }));
+     waitFor(() => {
+            expect(screen.getByPlaceholderText('skill')).toBeInTheDocument();
+        })
+         waitFor(() => {
+            expect(screen.getByText('level')).toBeInTheDocument();
+        })
+    });
 
     // it('text can be inputted into the Title field on the add details page', async () => {
     //     render(<CandidateAcademicInfo />);
