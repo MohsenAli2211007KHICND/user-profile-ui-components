@@ -10,7 +10,9 @@ import style from "./CandidateSkillsInfo.module.css";
 export default function CandidateskillInfo() {
   const [skill, setSkill] = useState("");
   const [level, setLevel] = useState("");
-  const [skillData, setSkillData] = useState([]);
+  const [skillData, setSkillData] = useState([{id:"1",skill:"Java", level:"5"},
+{id:"2",skill:"Python", level:"7"},
+{id:"3",skill:"JavaScript", level:"7"}]);
   const [certificate, setCertificate] = useState("");
   const [certificateData, setCertificateData] = useState([]);
   const [deleteId, setDeleteId] = useState(null);
@@ -328,8 +330,9 @@ export default function CandidateskillInfo() {
   return (
     <div className={styles.mainContainer} style={{ display: "block" }}>
       <form className={styles.formPersonalInfo} onSubmit={onSubmit}>
-        <Heading className={styles.personalInfoHeading} text="skill" />{" "}
-        <table style={{ width: "50%" }}>
+        <Heading className={styles.personalInfoHeading} text="Skills" />
+        <table className={style.contentTable}>
+          <th>S.no</th>
           <th>Skills</th>
           <th>Proficiency</th>
           <th></th>
@@ -372,7 +375,7 @@ export default function CandidateskillInfo() {
           handler={handleLevel}
           options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
           placeholder="Level"
-          className={styles.halfSize}
+          className={`${styles.halfSize} ${style.levelField}`}
         />
         <Button type="submit" text="Add" className={styles.saveButton} />
       </form>
@@ -380,9 +383,12 @@ export default function CandidateskillInfo() {
       {/* ----------------xxxxxxxxxxxxx-------------------- */}
 
       <form className={styles.formPersonalInfo} onSubmit={upload}>
-        <Heading className={styles.personalInfoHeading} text="Certificates" />{" "}
-        <table style={{ width: "50%" }}>
+        <Heading className={styles.personalInfoHeading} text="Certificates" optional="(Optional)" />{" "}
+        <table className={style.contentTable} >
+          
+          <th>S.no</th>
           <th>Certificates</th>
+          <th colSpan='2'>Action</th>
           {certificateData.map((element, index) => {
             return (
               <tr key={index}>
@@ -404,7 +410,7 @@ export default function CandidateskillInfo() {
                     />
                   </Popconfirm>
                 </td>
-                <td><Button
+                <td style={{textAlign: "left", paddingLeft:0}}><Button
                 onClick={() => onDownload(element.id)}
                 type="button" 
                 text={ <i className="fa-solid fa-cloud-arrow-down"></i> }
@@ -421,7 +427,7 @@ export default function CandidateskillInfo() {
           handler={handleCertificate}
           type="file"
           placeholder=""
-          className={styles.halfSize}
+          className={`${styles.halfSize} ${style.certificateField}`}
         />
         <Button type="submit" text="Upload" className={styles.saveButton} />
       </form>
