@@ -4,7 +4,7 @@ import styles from "../CandidateAcademicInfo/CandidateAcademicInfo.module.css";
 import InputField from "../InputField/InputField";
 import DropdownField from "../DropdownField/DropdownField";
 import Button from "../Button/Button";
-import { message, Popconfirm } from "antd";
+import { message, Popconfirm, Spin } from "antd";
 import style from "./CandidateSkillsInfo.module.css";
 
 export default function CandidateskillInfo() {
@@ -23,6 +23,10 @@ export default function CandidateskillInfo() {
   const [userId, setUserId] = useState(1);
   // const [filename, setFileName] = useState(sessionStorage.getItem("filename"));
   const [filename, setFileName] = useState("myResume");
+
+  const [loading, setLoading] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+  const [downloading, setDownloading] = useState(false)
 
   const fileRef = useRef();
 
@@ -213,7 +217,8 @@ export default function CandidateskillInfo() {
     if (certificate) {
       setCertificate("");
       setCategory("")
-      fileRef.current.value = null;  
+      fileRef.current.value = null; 
+      setLoading(true) 
       uploadFile(certificate, certificate.name, userId, category)
 
     }
@@ -240,9 +245,11 @@ export default function CandidateskillInfo() {
     })
       .then(async response => {
         const data = await response.json();
+        setLoading(false)
         setCertificateData([...certificateData, data])
       })
       .catch(err => {
+        setLoading(false)
         console.log(err);
       });
   }
@@ -250,7 +257,7 @@ export default function CandidateskillInfo() {
   const deleteFile = () => {
     // const newFileData = certificateData.filter((item) => item.id !== deleteFileId);
     //       setCertificateData(newFileData);
-
+    setDeleting(true)
     fetch(deleteFileUrl, {
       method: "DELETE",
       mode: "cors",
@@ -262,8 +269,10 @@ export default function CandidateskillInfo() {
       redirect: "follow",
       referrerPolicy: "no-referrer",
     })
-      .then((response) => {
+      .then(async (response) => {
         const res = response ? response.ok : false;
+        const data = await response.json()
+        setDeleting(false)
         console.log(response);
         if (res) {
           // messageApi.success("Details deleted successfully!");
@@ -278,6 +287,7 @@ export default function CandidateskillInfo() {
       })
       .catch((err) => {
         // messageApi.error("Error deleting details!");
+        setDeleting(false)
         console.log(err);
         setDeleteFileId(null);
       })
@@ -376,6 +386,7 @@ export default function CandidateskillInfo() {
           className={` ${style.levelField}`}
         />
         <Button type="submit" text="Upload" className={styles.saveButton} />
+        {loading && <Spin/>}
         {/* <Heading className={styles.personalInfoHeading} text="Certificates" optional="(Optional)" /> */}
         <table className={styles.eduTable} >
           <th>S.no</th>
@@ -397,12 +408,13 @@ export default function CandidateskillInfo() {
                     okText="Yes"
                     cancelText="No"
                   >
+                    {deleting && deleteFileId === element.id ? <Spin/> :
                     <Button
                       onClick={() => onDeleteFile(element.id)}
                       type="button"
                       text={<i className="fa fa-trash"></i>}
                       className={style.deleteBtn}
-                    />
+                    />}
                   </Popconfirm>
                 </td>
                 <td>
