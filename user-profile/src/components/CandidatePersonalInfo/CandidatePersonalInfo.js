@@ -199,42 +199,6 @@ function CandidatePersonalInfo() {
                         <Button disabled={disableNextBtn} text="Next" type="button" className={styles.nextButton} />
                     </div>
                 </form>
-                {
-                   /* <form className={styles.formPersonalInfo} onSubmit={onSubmit}>
-                    {showAlert ? <AlertMessage showAlert={showAlert} setAlert={setShowAlert} alertType={alertType} message={message} /> : ''}
-                    <Heading className={styles.personalInfoHeading} text="Personal Information" />
-                    <div>
-                        <InputField value={firstname} handler={handleFirstname} type='text' placeholder='First Name' pattern="[a-zA-Z ]*" className={styles.halfSize} required='required' icon='fa-solid fa-user'></InputField>
-                        <InputField value={lastname} handler={handleLastname} type='text' placeholder='Last Name' pattern="[a-zA-Z ]*" className={styles.halfSize} required='required' icon='fa-regular fa-user'></InputField>
-                    </div>
-                    <div>
-                        <DropdownField value={gender} handler={handleGender} options={['Male', 'Female']} className={styles.halfSize} placeholder='Gender' icon='fa-sharp fa-solid fa-person-dress' />
-                        <InputField value={dob} handler={handleDob} min="1970-01-01" type='date' placeholder='' className={styles.halfSize} required='required' icon='fa-solid fa-calendar-days'></InputField>
-                    </div>
-                    <div>
-                        <InputField value={nin} handler={handleNin} type='text' pattern="[0-9]*" placeholder='CNIC/Nation ID' className={styles.halfSize} required='required' icon='fa-solid fa-address-card'></InputField>
-                        <DropdownField value={maritalstat} handler={handleMaritalstat} options={['Single', 'Married']} className={styles.halfSize} placeholder='Marital Status' icon='fa-solid fa-heart' />
-                    </div>
-                    <div>
-                        <InputField disabled={true} value={email} type='email' placeholder='Email' className={styles.fullSize} required='required' icon='fa-solid fa-envelope'></InputField>
-                    </div>
-                    <div>
-                        <PhoneComponent value={phone} handler={handlePhone} placeholder='Mobile Number' type='text' className='' required='required' />
-                    </div>
-                    <div>
-                        <InputField value={city} handler={handleCity} type='text' placeholder='City' pattern="[a-zA-Z ]*" className={styles.fullSize} required='required' icon='ffa-sharp fa-solid fa-city'></InputField>
-                    </div>
-                    <div>
-                        <InputField value={address} handler={handleAddress} type='text' placeholder='Address' className={styles.fullSize} required='required' icon='fa-solid fa-location-dot'></InputField>
-                    </div>
-                    <div>
-                        <InputField value={linkedin} handler={handleLinkedin} type='text' placeholder='LinkedIn Profile' className={styles.fullSize} required='required' icon='fa-brands fa-linkedin'></InputField>
-                    </div>
-                    <div className={styles.buttonContainer}>
-                        <Button type="submit" text="Save" className={styles.saveButton} />
-                        <Button disabled={disableNextBtn} text="Next" type="button" className={styles.nextButton} />
-                    </div>
-                </form> */}
             </div>
         </>
 
