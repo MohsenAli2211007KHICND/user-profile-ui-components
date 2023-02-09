@@ -47,10 +47,6 @@ describe('CandidateSkillsInfo component test', () => {
     it('text can be inputted into the Skill field', () => {
         render(<CandidateskillInfo />);
         const addBtn = screen.getByText("Add");
-       // fireEvent(addAnotherBut, new MouseEvent('click', {
-       //     bubbles: true,
-       //     cancelable: true
-       // }));
         let skillInput;
         waitFor(() => {
             skillInput = screen.getByPlaceholderText("skill")
@@ -59,28 +55,28 @@ describe('CandidateSkillsInfo component test', () => {
         expect(skillInput.value).toBe('Python')
         let levelInput;
         waitFor(() => {
-            levelInput = screen.getByDisplayValue("level")
+            levelInput = screen.getByDisplayValue("Level")
         })
-        fireEvent.input(levelInput, { target: { value: '5' } })
+        fireEvent.change(levelInput, { target: { value: '5' } })
         expect(levelInput.value).toBe('5')
       });
 
-    //   it('should send post request on clicking Add button on add details page', async () => {
-        // render(<CandidateskillInfo />);
-    //     const addAnotherButton = screen.getByText("+ Add New");
-    //     fireEvent(addAnotherButton, new MouseEvent('click', {
-    //         bubbles: true,
-    //         cancelable: true
-    //     }));
-    //     let addButton;
-    //     await waitFor(() => {
-    //         addButton = screen.getByText("Add")
-    //     })
-    //     fireEvent(addButton, new MouseEvent('click', {
-    //         bubbles: true,
-    //         cancelable: true
-    //     }));
-    //     expect(fetch).toHaveBeenCalledTimes(2);
-    // });
+      it('should send post request on clicking Add button', () => {
+        render(<CandidateskillInfo />);
+        const addBtn = screen.getByText("Add");
+        fireEvent(addBtn, new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true
+        }));
+        let addButton;
+         waitFor(() => {
+            addButton = screen.getByText("Add")
+        })
+        fireEvent(addButton, new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true
+        }));
+        expect(fetch).toHaveBeenCalledTimes(4);
+    });
 
 });
