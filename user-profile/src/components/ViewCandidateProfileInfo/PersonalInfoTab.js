@@ -7,32 +7,34 @@ export default function PersonalInfoTab() {
     <div>
       <Button
               onClick={''}
-              disabled={""}
-              text="Cancel"
+              text="Personal Info"
               type="button"
               className={styles.saveButton}
             />   
                   <Button
               onClick={''}
-              disabled={""}
-              text="Cancel"
+              text="Academic"
               type="button"
               className={styles.saveButton}
             />
                   <Button
               onClick={""}
               disabled={""}
-              text="Cancel"
+              text="Experience"
               type="button"
               className={styles.saveButton}
             />      <Button
             onClick={''}
-            disabled={""}
-            text="Cancel"
+            text="Skills"
             type="button"
             className={styles.saveButton}
           />
-
+ <Button
+            onClick={''}
+            text="Certificates"
+            type="button"
+            className={styles.saveButton}
+          />
             
              </div>
   )
