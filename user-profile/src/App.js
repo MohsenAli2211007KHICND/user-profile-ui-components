@@ -9,9 +9,9 @@ import { CandidateWorkInfo } from './components/CandidateWorkInfo/CandidateWorkI
 function App() {
   return (
     <div className="App">
-     {/* <CandidatePersonalInfo></CandidatePersonalInfo> */}
-    {/* <CandidateAcademicInfo /> */}
-    {/* <CandidateWorkInfo /> */}
+     {/* <CandidatePersonalInfo></CandidatePersonalInfo> 
+    <CandidateAcademicInfo />
+     <CandidateWorkInfo /> */}
     <CandidateSkillsInfo />
     </div>
   );

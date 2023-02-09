@@ -9,9 +9,12 @@ describe('CandidateSkillsInfo component test', () => {
 
     beforeEach(() => {
         jest.spyOn(global, 'fetch').mockResolvedValue({
-            json: jest.fn().mockResolvedValue(mockData)
+            json: jest.fn().mockResolvedValue(mockData),
+            status: 200
         })
     });
+        // **************************************** Skills ****************************************
+
     it('should get user Skill Data on first render', async () => {
         render(<CandidateskillInfo />);
         expect(fetch).toHaveBeenCalledTimes(2);
@@ -79,4 +82,63 @@ describe('CandidateSkillsInfo component test', () => {
         expect(fetch).toHaveBeenCalledTimes(4);
     });
 
+    // **************************************** Certificates ****************************************
+    it('should get user Certificate Data on first render', async () => {
+        render(<CandidateskillInfo />);
+        expect(fetch).toHaveBeenCalledTimes(2);
+        const { originalFileName, category} = mockData[1]
+        await waitFor(() => {
+            const cert = screen.getAllByText(originalFileName);
+            const cat = screen.getAllByText(category)
+            cert.forEach((ele) =>{
+                expect(ele).toBeInTheDocument();
+            });
+            cat.forEach((ele) => {
+                expect(ele).toBeInTheDocument();
+            })
+        })
+        
+    });
+    it('should be able to add new Certificate when we click Add button', () => {
+        render(<CandidateskillInfo />);
+        const uploadBtn = screen.getByText("Upload");
+        fireEvent(uploadBtn, new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true
+        }));
+     waitFor(() => {
+            expect(screen.getByText('No file selected.')).toBeInTheDocument();
+        })
+         waitFor(() => {
+            expect(screen.getByText('Category')).toBeInTheDocument();
+        })
+    });
+
+    it('file should be selected in inputted of the certificate field', () => {
+        render(<CandidateskillInfo />);
+        const uploadBtn = screen.getByText("Upload");
+        let certInput;
+        waitFor(() => {
+            certInput = screen.getByPlaceholderText("Certificate")
+        }) 
+        const file = new File([""], "Build+Your+API+with+Spring.pdf", { type: "application/pdf" });
+        fireEvent.change(certInput, { target: { files: [file] } });
+        expect(certInput.files[0].name).toBe('Build+Your+API+with+Spring.pdf')
+        let catInput;
+        waitFor(() => {
+            catInput = screen.getByDisplayValue("Category")
+        })
+        fireEvent.change(catInput, { target: { value: 'Other' } })
+        expect(catInput.value).toBe('Other')
+      });
+
+      it('should send post request on clicking Add button', () => {
+        render(<CandidateskillInfo />);
+        const uploadBtn = screen.getByText("Upload");
+        fireEvent(uploadBtn, new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true
+        }));
+        expect(fetch).toHaveBeenCalledTimes(2);
+    });
 });

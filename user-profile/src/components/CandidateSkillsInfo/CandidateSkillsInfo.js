@@ -366,16 +366,13 @@ export default function CandidateskillInfo() {
       <form className={styles.formPersonalInfo} onSubmit={upload}>
       {/* <Heading className={`${styles.personalInfoHeading} ${style.certificatHeading}`} text="Add Certificates" type="medium" /> */}
               <Heading className={`${styles.personalInfoHeading} ${style.certificatHeading}`} text="Certificates" optional="(Optional)" />
-
-
-
         <InputField
           refling={fileRef}
           accept=".pdf, .odf"
           // value={certificate}
           handler={handleCertificate}
           type="file"
-          placeholder=""
+          placeholder="Certificate"
           className={`${styles.halfSize} ${style.certificateField}`}
         />
         <DropdownField
@@ -383,7 +380,7 @@ export default function CandidateskillInfo() {
           handler={handleCategory}
           options={["Front-end", "Back-end","Other"]}
           placeholder="Category"
-          className={` ${style.levelField}`}
+          className={`${style.levelField}`}
         />
         <Button type="submit" text="Upload" className={styles.saveButton} />
         {loading && <Spin/>}
