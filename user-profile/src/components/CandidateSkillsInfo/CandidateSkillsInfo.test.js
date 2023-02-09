@@ -12,7 +12,6 @@ describe('CandidateSkillsInfo component test', () => {
             json: jest.fn().mockResolvedValue(mockData)
         })
     });
-
     it('should get user Skill Data on first render', async () => {
         render(<CandidateskillInfo />);
         expect(fetch).toHaveBeenCalledTimes(2);
@@ -30,7 +29,7 @@ describe('CandidateSkillsInfo component test', () => {
         
     });
 
-    it('should be able to add new skill details when we click + Add  button', () => {
+    it('should be able to add new skill details when we click Add button', () => {
         render(<CandidateskillInfo />);
         const addBtn = screen.getByText("Add");
         fireEvent(addBtn, new MouseEvent('click', {
@@ -45,23 +44,29 @@ describe('CandidateSkillsInfo component test', () => {
         })
     });
 
-    // it('text can be inputted into the Title field on the add details page', async () => {
-    //     render(<CandidateAcademicInfo />);
-    //     const addAnotherButton = screen.getByText("+ Add New");
-    //     fireEvent(addAnotherButton, new MouseEvent('click', {
-    //         bubbles: true,
-    //         cancelable: true
-    //     }));
-    //     let titleInput;
-    //     await waitFor(() => {
-    //         titleInput = screen.getByPlaceholderText("Title (example Pre-Med, BSCS etc.)")
-    //     })
-    //     fireEvent.change(titleInput, { target: { value: 'Bachelor of Arts' } })
-    //     expect(titleInput.value).toBe('Bachelor of Arts')
-    //   });
+    it('text can be inputted into the Skill field', () => {
+        render(<CandidateskillInfo />);
+        const addBtn = screen.getByText("Add");
+       // fireEvent(addAnotherBut, new MouseEvent('click', {
+       //     bubbles: true,
+       //     cancelable: true
+       // }));
+        let skillInput;
+        waitFor(() => {
+            skillInput = screen.getByPlaceholderText("skill")
+        })
+        fireEvent.change(skillInput, { target: { value: 'Python' } })
+        expect(skillInput.value).toBe('Python')
+        let levelInput;
+        waitFor(() => {
+            levelInput = screen.getByDisplayValue("level")
+        })
+        fireEvent.input(levelInput, { target: { value: '5' } })
+        expect(levelInput.value).toBe('5')
+      });
 
     //   it('should send post request on clicking Add button on add details page', async () => {
-    //     render(<CandidateAcademicInfo />);
+        // render(<CandidateskillInfo />);
     //     const addAnotherButton = screen.getByText("+ Add New");
     //     fireEvent(addAnotherButton, new MouseEvent('click', {
     //         bubbles: true,
