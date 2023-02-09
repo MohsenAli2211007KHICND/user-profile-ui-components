@@ -12,7 +12,7 @@ export default function CandidateskillInfo() {
   const [level, setLevel] = useState("");
   const [skillData, setSkillData] = useState([]);
   const [certificate, setCertificate] = useState("");
-  const [certificateData, setCertificateData] = useState(certMock);
+  const [certificateData, setCertificateData] = useState([]);
   const [category, setCategory] = useState("")
   const [deleteId, setDeleteId] = useState(null);
 
