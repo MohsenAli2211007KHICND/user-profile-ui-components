@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import Heading from "../Heading/Heading";
-import styles from "../CandidatePersonalInfo/CandidatePersonalInfo.module.css";
+import React from 'react'
+import Heading from '../Heading/Heading'
 
 export default function AcademicTab() {
   const [acdemicData, setAcademicData] = useState("");
@@ -23,33 +22,8 @@ export default function AcademicTab() {
 
   return (
     <div>
-      <Heading
-        text="Academic Information"
-        className={styles.personalInfoHeading}
-      />
-      <div>
-        <table border={2}>
-          <tr>
-            <td>Degree : </td>
-            <td>{}</td>
-            <td>Degree Title : </td>
-            <td>{}</td>
-          </tr>
-          <tr>
-            <td>Graduation Date : </td>
-            <td>{}</td>
-            <td>CGPA : </td>
-            <td>{}</td>
-          </tr>
-          <tr>
-            <td>Institute/University : </td>
-            <td>{}</td>
-            {/* <td>Degree In Progress</td> */}
-            <td>Final Year Project : </td>
-            <td>{}</td>
-          </tr>
-        </table>
-      </div>
+        <Heading text="Academic Information" className= {personalInfoHeading}/>
+
     </div>
   );
 }

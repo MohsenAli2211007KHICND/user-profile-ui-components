@@ -6,7 +6,7 @@ export default function ViewCandidateProfileInfo() {
   return (
     <div>
       <PersonalInfoTab />
-      <AcademicTab />
+      {/* <AcademicTab /> */}
     </div>
   )
 }
