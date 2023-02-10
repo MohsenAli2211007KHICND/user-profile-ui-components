@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Heading from '../Heading/Heading'
+import styles from '../CandidatePersonalInfo/CandidatePersonalInfo.module.css'
+
 
 export default function AcademicTab() {
   const [acdemicData, setAcademicData] = useState("");
 
-  useEffect(() => {
+  useEffectect(() => {
     const academicInfo = () => {
       fetch("http://192.168.0.160:8080/api/educational_information")
         .then(async (response) => {
@@ -22,7 +24,7 @@ export default function AcademicTab() {
 
   return (
     <div>
-        <Heading text="Academic Information" className= {personalInfoHeading}/>
+        <Heading text="Academic Information" className= {styles.personalInfoHeading}/>
 
     </div>
   );
