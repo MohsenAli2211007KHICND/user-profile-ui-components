@@ -1,25 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import Button from "../Button/Button";
 import styles from "../CandidateAcademicInfo/CandidateAcademicInfo.module.css";
 import Heading from "../Heading/Heading";
 
-export default function PersonalInfoTab({ userId }) {
-  const [personalData, setPersonalData] = useState();
+function PersonalInfoTab({ userId, personalData }) {
+  // const [personalData, setPersonalData] = useState(undefined);
 
-  useEffect(() => {
-    const personalInfo = () => {
-      fetch(`http://192.168.0.129:5000/api/personal_information/users/1`)
-        .then(async (response) => {
-          const data = await response.json();
-          console.log(data);
-          setPersonalData(data);
-        })
-        .catch((err) => {
-          console.log("Hello! I caught this error.");
-        });
-    };
-    personalInfo();
-  }, []);
+  // useEffect(() => {
+  //   const personalInfo = () => {
+
+  //     if(personalData !== undefined){
+  //       return;
+  //     }
+
+  //     fetch(`http://userprofileserviceelastic-env.eba-piepztun.ap-south-1.elasticbeanstalk.com/api/personal_information/users/1`)
+  //       .then(async (response) => {
+  //         const data = await response.json();
+  //         console.log(data);
+  //         setPersonalData(data);
+  //       })
+  //       .catch((err) => {
+  //         console.log("Hello! I caught this error.");
+  //       });
+  //   };
+  //   personalInfo();
+  // }, []);
 
   return (
     <div>
@@ -73,3 +78,5 @@ export default function PersonalInfoTab({ userId }) {
     </div>
   );
 }
+
+export default memo(PersonalInfoTab)

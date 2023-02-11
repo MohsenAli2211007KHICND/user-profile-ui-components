@@ -14,10 +14,10 @@ function App() {
      {/* <CandidatePersonalInfo></CandidatePersonalInfo> 
     <CandidateAcademicInfo />
      <CandidateWorkInfo /> */}
-    {/* <CandidateSkillsInfo /> */}
+    <CandidateSkillsInfo />
     {/* <ViewCandidateProfileInfo /> */}
     {/* <SkillsTab /> */}
-    <ViewCandidateProfileInfo/>
+    {/* <ViewCandidateProfileInfo/> */}
     </div>
   );
 }

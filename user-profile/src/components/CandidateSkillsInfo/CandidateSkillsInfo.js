@@ -24,22 +24,23 @@ export default function CandidateskillInfo() {
   // const [filename, setFileName] = useState(sessionStorage.getItem("filename"));
   const [filename, setFileName] = useState("myResume");
 
+  const [messageApi, contextHolder] = message.useMessage();
+
   const [loading, setLoading] = useState(false)
   const [deleting, setDeleting] = useState(false)
+  const [skillLoading, setSkillLoading] = useState(false)
   const [downloading, setDownloading] = useState(false)
 
   const fileRef = useRef();
 
-  // const basicRoute =
-  //   "http://userprofileserviceapplication3-env.eba-pm56e7xe.us-east-1.elasticbeanstalk.com/api/users/skills";
-  const basicRoute = 'http://192.168.0.185:5000/api/users/skills'
+  const basicRoute =
+    "http://userprofileserviceelastic-env.eba-piepztun.ap-south-1.elasticbeanstalk.com/api/users/skills";
   const getSkillsbyUserId = `${basicRoute}/${userId}`;
   const postUrl = `${basicRoute}`
   const deleteUrl = `${basicRoute}/${deleteId}`
 
 
-  //const fileRoute = 'http://userprofileserviceapplication3-env.eba-pm56e7xe.us-east-1.elasticbeanstalk.com/api/file'
-  const fileRoute = 'http://192.168.0.185:5000/api/file'
+  const fileRoute = 'http://userprofileserviceelastic-env.eba-piepztun.ap-south-1.elasticbeanstalk.com/api/file'
 
   const fileUploadUrl = `${fileRoute}/upload`
   const getAllFilesUrl = `${fileRoute}/user/${userId}`
@@ -123,6 +124,8 @@ export default function CandidateskillInfo() {
       }
     }
 
+    setSkillLoading(true)
+
     const obj = {
       userId,
       skill,
@@ -144,24 +147,26 @@ export default function CandidateskillInfo() {
     })
       .then(async (response) => {
         const data = await response.json();
+        setSkillLoading(false)
         console.log(response);
         console.log(data)
-        // const res = response ? response.ok : false;
-        // const updateUser = res
-        //   ? "Info saved successfully!"
-        //   : "Error saving info!";
+        const res = response ? response.ok : false;
+        const updateUser = res
+          ? "Info saved successfully!"
+          : "Error saving info!";
         // setDisNextBtn(!res);
-        // if (res) {
-        //   messageApi.success(updateUser);
-        // } else {
-        //   messageApi.error(updateUser);
-        // }
+        if (res) {
+          messageApi.success(updateUser);
+        } else {
+          messageApi.error(updateUser);
+        }
         setSkillData([...skillData, data]);
       })
       .catch((err) => {
+        setSkillLoading(false)
         console.log(err);
-        // const updateUser = "Error saving info!";
-        // messageApi.error(updateUser);
+        const updateUser = "Error saving info!";
+        messageApi.error(updateUser);
         // setDisNextBtn(true);
       });
 
@@ -189,18 +194,18 @@ export default function CandidateskillInfo() {
         const res = response ? response.ok : false;
         console.log(response);
         if (res) {
-          // messageApi.success("Details deleted successfully!");
+          messageApi.success("Details deleted successfully!");
           const newData = skillData.filter((item) => item.id !== deleteId);
           setSkillData(newData);
         }
-        // else {
-        //   messageApi.error("Error deleting details!");
-        // }
+        else {
+          messageApi.error("Error deleting details!");
+        }
 
         setDeleteId(null);
       })
       .catch((err) => {
-        // messageApi.error("Error deleting details!");
+        messageApi.error("Error deleting details!");
         console.log(err);
         setDeleteId(null);
       });
@@ -271,7 +276,6 @@ export default function CandidateskillInfo() {
     })
       .then(async (response) => {
         const res = response ? response.ok : false;
-        const data = await response.json()
         setDeleting(false)
         console.log(response);
         if (res) {
@@ -306,6 +310,8 @@ export default function CandidateskillInfo() {
   }
 
   return (
+    <>
+    {contextHolder}
     <div className={styles.mainContainer} style={{ display: "block" }}>
       <form className={styles.formPersonalInfo} onSubmit={onSubmit}>
       {/* <Heading className={styles.personalInfoHeading} text="Add Skills" type="medium"/> */}
@@ -326,6 +332,7 @@ export default function CandidateskillInfo() {
           className={` ${style.levelField}`}
         />
         <Button type="submit" text="Add" className={styles.saveButton} />
+        {skillLoading && <Spin/>}
         {/* <Heading className={styles.personalInfoHeading} text="Skills" /> */}
         <table className={styles.eduTable}>
           <th>S.no</th>
@@ -347,12 +354,13 @@ export default function CandidateskillInfo() {
                     okText="Yes"
                     cancelText="No"
                   >
+                    {deleteId === element.id ? <Spin/> :
                     <Button
                       onClick={() => onDelete(element.id)}
                       type="button"
                       text={<i class="fa fa-trash"></i>}
                       className={style.deleteBtn}
-                    />
+                    />}
                   </Popconfirm>
                 </td>
               </tr>
@@ -428,5 +436,6 @@ export default function CandidateskillInfo() {
         </table>
       </form>
     </div>
+    </>
   );
 }

@@ -30,23 +30,23 @@ const skillMock = [
     }
 ]
 
-export default function SkillsTab({ userId }) {
-  const [skillInfo, setSkillInfo] = useState([]);
+export default function SkillsTab({ skillsData }) {
+  // const [skillInfo, setSkillInfo] = useState([]);
 
-  useEffect(() => {
-    const skillsReq = () => {
-      fetch(`http://192.168.0.129:5000/api/users/skills/1`)
-        .then(async (response) => {
-          const skillData = await response.json();
-          console.log(skillData);
-          setSkillInfo(skillData);
-        })
-        .catch((err) => {
-          console.log(err, "Hello! I caught this error.");
-        });
-    };
-    skillsReq();
-  }, []);
+  // useEffect(() => {
+  //   const skillsReq = () => {
+  //     fetch(`http://userprofileserviceelastic-env.eba-piepztun.ap-south-1.elasticbeanstalk.com/api/users/skills/1`)
+  //       .then(async (response) => {
+  //         const skillData = await response.json();
+  //         console.log(skillData);
+  //         setSkillInfo(skillData);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err, "Hello! I caught this error.");
+  //       });
+  //   };
+  //   skillsReq();
+  // }, []);
 
   const giveMeSkillLevel = (proficiency) => {
     if (proficiency <= 5) {
@@ -62,7 +62,7 @@ export default function SkillsTab({ userId }) {
     <div>
       <Heading text="Skills" className={styles.personalInfoHeading}></Heading>
       <div style={{display: "flex"}}>
-        {skillInfo.map(({id, skill, proficiency, userId}) => {
+        {skillsData.map(({id, skill, proficiency, userId}) => {
             const [level, color] = giveMeSkillLevel(proficiency)
             return( <div>{skill} <Tag color={color} >{level}</Tag></div>)
         })}

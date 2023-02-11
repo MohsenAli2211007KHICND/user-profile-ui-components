@@ -3,24 +3,24 @@ import Heading from '../Heading/Heading'
 import styles from '../CandidatePersonalInfo/CandidatePersonalInfo.module.css'
 
 
-export default function AcademicTab({userId}) {
-  const [academicData, setAcademicData] = useState([]);
+export default function AcademicTab({ academicData }) {
+  // const [academicData, setAcademicData] = useState([]);
 
-  useEffect(() => {
-    const academicInfoReq = () => {
-      fetch(`http://192.168.0.129:5000/api/educational_information/user/24`)
-        .then(async (response) => {
-          console.log(response);
-          const data = await response.json();
-          console.log(data);
-          setAcademicData(data);
-        })
-        .catch((err) => {
-          console.log(err, "Hello I caught this error!");
-        });
-    };
-    academicInfoReq();
-  },[]);
+  // useEffect(() => {
+  //   const academicInfoReq = () => {
+  //     fetch(`http://userprofileserviceelastic-env.eba-piepztun.ap-south-1.elasticbeanstalk.com/api/educational_information/user/24`)
+  //       .then(async (response) => {
+  //         console.log(response);
+  //         const data = await response.json();
+  //         console.log(data);
+  //         setAcademicData(data);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err, "Hello I caught this error!");
+  //       });
+  //   };
+  //   academicInfoReq();
+  // },[]);
 
   return (
     <div>
